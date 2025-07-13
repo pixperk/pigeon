@@ -1,0 +1,8 @@
+[workspace]
+
+members = [
+    "pigeon-core",
+    "pigeon-cli",
+]
+
+resolver = "2"

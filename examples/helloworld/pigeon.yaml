@@ -1,0 +1,11 @@
+service: HelloService
+version: v1
+
+rpcs:
+  - name: greet
+    method: GET
+    path: /greet
+    request:
+      name: string
+    response:
+      message: string
