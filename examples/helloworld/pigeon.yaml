@@ -9,3 +9,27 @@ rpcs:
       name: string
     response:
       message: string
+
+  - name: add_numbers
+    method: POST
+    path: /add
+    request:
+      a: integer
+      b: integer
+    response:
+      result: integer
+
+  - name: echo
+    method: POST
+    path: /echo
+    request:
+      data: string
+    response:
+      echoed: string
+
+  - name: get_time
+    method: GET
+    path: /time
+    request: {}
+    response:
+      timestamp: string
