@@ -5,6 +5,7 @@ edition = "2024"
 
 [dependencies]
 pigeon-core = { path = "../pigeon-core" }
+piegon-codegen = { path = "../piegon-codegen" }
 clap = { version = "4.0", features = ["derive"] }
 anyhow = "1.0"
 tokio = { version = "1.38", features = ["full"] }

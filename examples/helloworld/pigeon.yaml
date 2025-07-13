@@ -34,29 +34,29 @@ rpcs:
     response:
       timestamp: string
     
-    - name: update_profile
-  method: PUT
-  path: /users/update
-  request:
-    username:
-      type: string
-      optional: false
-      validate:
-        min_length: 3
-        max_length: 20
+  - name: update_profile
+    method: PUT
+    path: /users/update
+    request:
+      username:
+        type: string
+        optional: false
+        validate:
+          min_length: 3
+          max_length: 20
 
-    email:
-      type: string
-      validate:
-        email: true
+      email:
+        type: string
+        validate:
+          email: true
 
-    age:
-      type: integer
-      optional: true
-      validate:
-        min: 13
+      age:
+        type: integer
+        optional: true
+        validate:
+          min: 13
 
-  response:
-    success: boolean
-    message: string
+    response:
+      success: boolean
+      message: string
 

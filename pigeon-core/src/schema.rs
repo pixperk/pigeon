@@ -32,7 +32,7 @@ impl FieldDef {
         match self {
             FieldDef::Simple(t) => Field {
                 r#type: t,
-                optional: false,
+                optional: Some(false),
                 validate: None,
             },
             FieldDef::Detailed(f) => f,
@@ -45,7 +45,7 @@ impl FieldDef {
 pub struct Field{
     pub r#type : String,
     #[serde(default)]
-    pub optional : bool,
+    pub optional : Option<bool>,
     #[serde(default)]
     pub validate: Option<HashMap<String, serde_yaml::Value>>,
 }

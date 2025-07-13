@@ -2,7 +2,8 @@
 
 members = [
     "pigeon-core",
-    "pigeon-cli",
+    "pigeon-cli", 
+    "piegon-codegen",
 ]
 
 resolver = "2"
