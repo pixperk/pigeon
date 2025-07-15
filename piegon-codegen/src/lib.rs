@@ -1,3 +1,4 @@
+use anyhow::Ok;
 use pigeon_core::schema::{FieldMap, Schema};
 
 fn to_pascal_case(s: &str) -> String {
@@ -67,8 +68,45 @@ pub fn generate_structs(schema: &Schema) -> anyhow::Result<String> {
     Ok(output)
 }
 
-pub fn write_structs_to_file(schema: &Schema, path: &str) -> anyhow::Result<()> {
-    let code = generate_structs(schema)?;
+pub fn codegen_rust(schema: &Schema, path: &str) -> anyhow::Result<()> {
+    let mut code = String::new();
+    
+    // Generate structs
+    let structs = generate_structs(schema)?;
+    code.push_str(&structs);
+    
+    // Generate trait
+    let trait_code = generate_trait(schema)?;
+    code.push('\n');
+    code.push_str(&trait_code);
+    
     std::fs::write(path, code)?;
     Ok(())
+}
+
+pub fn generate_trait(schema: &Schema) -> anyhow::Result<String>{
+    let trait_name = format!(
+        "{}Service",
+          to_pascal_case(&schema.service.replace("Service", ""))
+    );
+
+    let mut output = format!(
+         "#[async_trait::async_trait]\npub trait {} {{\n",
+        trait_name
+    );
+    
+    for rpc in &schema.rpcs{
+        let method_name = rpc.name.to_lowercase();
+        let req_ty = format!("{}Request", to_pascal_case(&rpc.name));
+        let res_ty = format!("{}Response", to_pascal_case(&rpc.name));
+
+        output.push_str(&format!(
+            "    async fn {}(&self, req: {}) -> anyhow::Result<{}>;\n",
+            method_name, req_ty, res_ty
+        ));
+    }
+
+     output.push_str("}\n");
+
+    Ok(output)
 }

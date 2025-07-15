@@ -19,7 +19,7 @@ enum Commands{
         file: String,
     },
     Generate {
-        #[arg(short, long, default_value = "examples/helloworld/pigeon.yaml")]
+        #[arg(short, long, default_value = "../examples/helloworld/pigeon.yaml")]
         file: String,
         #[arg(short, long, default_value = "generated_structs.rs")]
         output: String,
@@ -39,10 +39,11 @@ async fn main() -> anyhow::Result<()>{
             let content = std::fs::read_to_string(&file)?;
             let schema: pigeon_core::schema::Schema = serde_yaml::from_str(&content)?;
             
-            piegon_codegen::write_structs_to_file(&schema, &output)?;
+            piegon_codegen::codegen_rust(&schema, &output)?;
             println!("Generated structs written to: {}", output);
         }
     }
 
     Ok(())
 }
+
